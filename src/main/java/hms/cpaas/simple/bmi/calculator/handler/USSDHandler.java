@@ -4,6 +4,7 @@ import hms.cpaas.simple.bmi.calculator.api.USSDIndicationObject;
 import hms.cpaas.simple.bmi.calculator.service.SystemRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -23,10 +24,15 @@ public class USSDHandler {
     }
 
     public Mono<ServerResponse> handleUSSDMO(final String requestId, final ServerRequest request) {
-        return request
-                .bodyToMono(USSDIndicationObject.class)
-                .doOnNext(req -> LOGGER.info("Received Ussd Mo Request [{}]", req))
-                .flatMap(req -> requestHandler.handlePlatformRequest(requestId, req))
-                .flatMap(req -> ServerResponse.ok().body(BodyInserters.fromObject(req)));
+        MDC.put("trxId", requestId);
+        try {
+            return request
+                    .bodyToMono(USSDIndicationObject.class)
+                    .doOnNext(req -> LOGGER.info("Received Ussd Mo Request [{}]", req))
+                    .flatMap(req -> requestHandler.handlePlatformRequest(requestId, req))
+                    .flatMap(req -> ServerResponse.ok().body(BodyInserters.fromObject(req)));
+        } finally {
+            MDC.clear();
+        }
     }
 }
