@@ -82,4 +82,20 @@ public class USSDIndicationObject {
     public void setEncoding(String encoding) {
         this.encoding = encoding;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("USSDIndicationObject{");
+        sb.append("version='").append(version).append('\'');
+        sb.append(", applicationId='").append(applicationId).append('\'');
+        sb.append(", message='").append(message).append('\'');
+        sb.append(", requestId='").append(requestId).append('\'');
+        sb.append(", sessionId='").append(sessionId).append('\'');
+        sb.append(", ussdOperation='").append(ussdOperation).append('\'');
+        sb.append(", sourceAddress='").append(sourceAddress).append('\'');
+        sb.append(", vlrAddress='").append(vlrAddress).append('\'');
+        sb.append(", encoding='").append(encoding).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
