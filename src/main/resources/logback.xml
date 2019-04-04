@@ -12,7 +12,7 @@
   -->
 
 <configuration>
-
+    <!--Appender Definision-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder>
@@ -93,6 +93,7 @@
         </encoder>
     </appender>
 
+    <!--Logger Definition -->
     <logger name="org.hibernate" level="ERROR" additivity="true">
         <appender-ref ref="debug-appender"/>
         <appender-ref ref="info-appender"/>
